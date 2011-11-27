@@ -1,5 +1,3 @@
-Hi!
-I'm please to announce the availability of open-source implementation of
 OCS/Lync compatible SIP Producer endpoint.
 The source is licensed under Apache license.
 
@@ -49,10 +47,6 @@ future it will land in the official Apache Camel source tree.
 Even though you're not a Camel user, you may find it educating in case you
 wish to know how to develop with JAIN-SIP and/or how inter-operate with
 Microsoft-extended SIP.
-
-
-Kudos to Camel, JAIN-JIP, and Pidgin SIPE developers who also made this
-possible!
 
 Usage example:
 
