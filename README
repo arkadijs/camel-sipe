@@ -1,2 +1,73 @@
-Nothing there yet.
-Waiting for Tieto bureaucratic machine to authorize open-source process.
+Hi!
+I'm please to announce the availability of open-source implementation of
+OCS/Lync compatible SIP Producer endpoint.
+The source is licensed under Apache license.
+
+http://bitbucket.org/arkadi/camel-sipe
+
+Some bits of code - Type3Message.java thats deals with NTLM signatures are
+modeled from jCIFS (LGPL v2.1+) class of the same name. But similarity ends
+here, so I put the Apache license banner on it. If you think there are
+problems with code licensing - just let me know, and I'll try to find a
+consensus.
+
+The source could be built standalone or put into Camel tree and built there
+with minor pom modifications. jCIFS library must be installed into local repo:
+http://jcifs.samba.org/src/jcifs-1.3.17.jar
+mvn install:install-file -Dfile=jcifs-1.3.17.jar -DgroupId=org.samba.jcifs \
+    -DartifactId=jcifs -Dversion=1.3.17 -Dpackaging=jar
+
+The implementation is fully thread-safe in a sense that SIP state-machine
+is protected by synchronized functions to keep things simple and
+race/deadlock-free, at least for the initial release. It does not mean the
+performance is bad. Not at all! Some highlights includes:
+1. supports sending of multiple messages to multiple users to multiple
+servers in parallel
+2. event-driven state machine caches presence information and dialogs
+3. uses Camel asynchronous processing
+4. uses EPID and GRUU MS REGISTER extension
+5. uses enhanced presence MS SUBSCRIBE extension
+6. works with OCS clustered server pool
+7. multiple endpoints could be instantiated (on different ports) to
+connect to different OCS/AD domains
+8. multiple endpoints with different URL-s may share single SIP stack
+(some coding is required to detect incompatible configurations)
+9. properly calculates SIP request/response NTLM signatures, EPID ->
++sip.instance magic is also there.
+
+Tested against OCS 2007R2 and Lync.
+
+At present, only Producer part is implemented, but it could be easily
+extended in a day or two to provide the Consumer. I just didn't get to
+the business case where the Consumer functionality would be necessary.
+There are still some internal implementation deficiencies, but I believe
+that even in the current state it could be considered for a pre-production
+deployments.
+
+So, I invite you to review and use the code with a hope that in some near
+future it will land in the official Apache Camel source tree.
+Even though you're not a Camel user, you may find it educating in case you
+wish to know how to develop with JAIN-SIP and/or how inter-operate with
+Microsoft-extended SIP.
+
+
+Kudos to Camel, JAIN-JIP, and Pidgin SIPE developers who also made this
+possible!
+
+Usage example:
+
+from("jetty:http://localhost:1112/inbound")
+    .setHeader("To", constant("lynctest"))
+    .to("sipe://cs2010.example.com:5061?"
+    + "toUser=lynctest&" // used if not set via To header
+    + "toHost=example.com&"
+    + "fromUser=lynctest2&"
+    + "fromHost=example.com&"
+    + "fromPort=5066&"
+    + "ip=eth0&"
+    + "authUserName=lynctest2&"
+    + "authPassword=***&"
+    + "authAdDomain=exampledom&"
+    + "transport=tls&"
+    + "debugLog=/tmp/jain-sip-debug.log&"
+    + "presenceList=3500,5000,15500,12500");
