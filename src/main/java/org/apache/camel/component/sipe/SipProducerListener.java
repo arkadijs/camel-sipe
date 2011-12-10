@@ -189,7 +189,7 @@ public class SipProducerListener implements SipListener {
         String userAgent = "Camel::SIPE JAIN-SIP/1.2";
         try {
             Properties p = new Properties();
-            p.load(SipProducerListener.class.getResourceAsStream("/META-INF/maven/com.tieto/camel-sipe/pom.properties"));
+            p.load(SipProducerListener.class.getResourceAsStream("/META-INF/maven/org.apache.camel/camel-sipe/pom.properties"));
             String cameSipeVersion = p.getProperty("version");
             p.clear();
             p.load(SipProducerListener.class.getResourceAsStream("/META-INF/maven/javax.sip/jain-sip-ri/pom.properties"));
