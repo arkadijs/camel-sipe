@@ -24,7 +24,7 @@
 <!--    <parent>
         <groupId>org.apache.camel</groupId>
         <artifactId>components</artifactId>
-        <version>2.9-SNAPSHOT</version>
+        <version>2.11-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>-->
 
@@ -32,7 +32,7 @@
     <artifactId>camel-sipe</artifactId>
 <!--    <packaging>bundle</packaging>-->
     <name>Camel :: SIPE</name>
-    <version>2.8.3</version>
+    <version>2.10.0</version>
     <description>Camel SIP protocol based communication component for proprietary Office Communicator extensions</description>
 
 <!--    <properties>
@@ -42,7 +42,7 @@
     </properties>-->
 
     <properties>
-        <camel-version>2.8.3</camel-version>
+        <camel-version>2.10.0</camel-version>
         <log4j-version>1.2.16</log4j-version>
         <slf4j-version>1.6.1</slf4j-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,30 +51,32 @@
 
     <repositories>
         <repository>
-            <id>jboss.release</id>
+            <id>mavenprimary</id>
+            <name>Maven Primary Repository</name>
+            <url>http://repo.maven.apache.org/maven2</url>
+        </repository>
+        <repository>
+            <id>jboss</id>
             <name>JBoss Maven Repository</name>
-            <url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
+            <url>https://repository.jboss.org/nexus/content/groups/public-jboss</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
         </repository>
         <repository>
-            <id>apache.release</id>
-            <name>Apache Releases Repository</name>
+            <id>apache</id>
+            <name>Apache Maven Repository</name>
             <url>https://repository.apache.org/content/repositories/releases</url>
         </repository>
         <repository>
-            <id>camel-extra.release</id>
-            <name>Camel Extra Releases Repository</name>
-            <url>http://camel-extra.googlecode.com/svn/maven2/releases</url>
+            <id>springframework</id>
+            <name>Spring Framework Maven Repository</name>
+            <url>http://maven.springframework.org/release</url>
         </repository>
         <repository>
-            <id>springframework.release</id>
-            <name>Spring Framework Releases Repository</name>
-            <url>http://maven.springframework.org/release</url>
+            <id>sonatype</id>
+            <name>Sonatype Maven Repository</name>
+            <url>https://oss.sonatype.org/content/groups/public</url>
         </repository>
     </repositories>
 
@@ -104,7 +106,7 @@
         <dependency>
             <groupId>javax.sip</groupId>
             <artifactId>jain-sip-api</artifactId>
-            <version>1.2</version>
+            <version>1.2.0</version>
         </dependency>
         <dependency>
             <groupId>javax.sip</groupId>
@@ -152,9 +154,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.6</source>
+                    <target>1.6</target>
                 </configuration>
             </plugin>
         </plugins>
